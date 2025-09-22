@@ -252,27 +252,38 @@
     <div id="printAllTable"></div>
 
     <script>
-        // Sample student data (dummy database)
-        const students = [
-            { name: "Ahmed Khan", admissionNo: "1001", mobileNo: "9876543210", address: "Village ABC, Tehsil XYZ" },
-            { name: "Fatima Ali", admissionNo: "1002", mobileNo: "8765432109", address: "Village DEF, Tehsil GHI" },
-            { name: "Mohammad Raza", admissionNo: "1003", mobileNo: "7654321098", address: "Village JKL, Tehsil MNO" },
-            { name: "Zainab Bano", admissionNo: "1004", mobileNo: "6543210987", address: "Village PQR, Tehsil STU" },
-            { name: "Ali Abbas", admissionNo: "1005", mobileNo: "5432109876", address: "Village VWX, Tehsil YZA" }
-        ];
+        // Data is now fetched from sessionStorage
+        const students = JSON.parse(sessionStorage.getItem('students')) || [];
 
         let currentStudentIndex = 0;
 
-        function displayStudent(student) {
+        // Display all students on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (students.length > 0) {
+                displayAllStudents();
+            } else {
+                document.getElementById('resultsContainer').innerHTML = '<p style="text-align: center; color: #777;">No students found in the database.</p>';
+            }
+        });
+
+        function displayAllStudents() {
             const container = document.getElementById('resultsContainer');
-            container.innerHTML = `
-                <div class="student-result">
-                    <p><strong>Name:</strong> ${student.name}</p>
-                    <p><strong>Admission No:</strong> ${student.admissionNo}</p>
-                    <p><strong>Mobile No:</strong> ${student.mobileNo}</p>
-                    <p><strong>Address:</strong> ${student.address}</p>
-                </div>
-            `;
+            container.innerHTML = '';
+            if (students.length > 0) {
+                students.forEach(student => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'student-result';
+                    resultDiv.innerHTML = `
+                        <p><strong>Name:</strong> ${student.name}</p>
+                        <p><strong>Admission No:</strong> ${student.admissionNo}</p>
+                        <p><strong>Mobile No:</strong> ${student.mobileNo}</p>
+                        <p><strong>Address:</strong> ${student.address}</p>
+                    `;
+                    container.appendChild(resultDiv);
+                });
+            } else {
+                container.innerHTML = '<p style="text-align: center; color: #777;">No students found in the database.</p>';
+            }
         }
 
         function searchStudent() {
@@ -303,13 +314,33 @@
         }
 
         function viewNextStudent() {
+            if (students.length === 0) {
+                alert("No students to display.");
+                return;
+            }
             currentStudentIndex = (currentStudentIndex + 1) % students.length;
             displayStudent(students[currentStudentIndex]);
         }
         
         function viewPreviousStudent() {
+            if (students.length === 0) {
+                alert("No students to display.");
+                return;
+            }
             currentStudentIndex = (currentStudentIndex - 1 + students.length) % students.length;
             displayStudent(students[currentStudentIndex]);
+        }
+        
+        function displayStudent(student) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = `
+                <div class="student-result">
+                    <p><strong>Name:</strong> ${student.name}</p>
+                    <p><strong>Admission No:</strong> ${student.admissionNo}</p>
+                    <p><strong>Mobile No:</strong> ${student.mobileNo}</p>
+                    <p><strong>Address:</strong> ${student.address}</p>
+                </div>
+            `;
         }
 
         // Function for printing a single student record (requires a backend)
@@ -324,6 +355,10 @@
 
         // Function for printing all students
         function printAllStudents() {
+            if (students.length === 0) {
+                alert("There are no students to print.");
+                return;
+            }
             const printContainer = document.getElementById('printAllTable');
             printContainer.innerHTML = '<h1>All Student Records</h1>';
             
@@ -357,6 +392,5 @@
             window.location.href = 'login.html';
         }
     </script>
-
 </body>
 </html>
