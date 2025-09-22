@@ -13,22 +13,17 @@
             background-color: #f4f7f6;
             padding: 20px;
             color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
         }
         .main-container {
             background-color: white;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 90%;
-            text-align: center;
+            max-width: 900px;
+            margin: auto;
         }
         .header {
+            text-align: center;
             margin-bottom: 40px;
         }
         .header h1 {
@@ -44,13 +39,13 @@
         }
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            justify-content: center;
+            text-align: center;
         }
         .option-card {
             background-color: #f9f9f9;
-            padding: 25px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s, box-shadow 0.2s;
@@ -64,16 +59,18 @@
         .option-card h3 {
             font-size: 20px;
             color: #1e8449;
-            margin-top: 0;
-            margin-bottom: 10px;
+            margin: 0;
         }
         .option-card p {
             font-size: 14px;
             color: #777;
+            margin-top: 10px;
         }
         .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin-top: 40px;
-            text-align: center;
         }
         .footer-buttons button {
             padding: 12px 25px;
@@ -83,9 +80,11 @@
             cursor: pointer;
             color: white;
             font-weight: 700;
+        }
+        .btn-logout {
             background-color: #555;
         }
-        .footer-buttons button:hover {
+        .btn-logout:hover {
             background-color: #333;
         }
     </style>
@@ -93,31 +92,36 @@
 <body>
     <div class="main-container">
         <div class="header">
-            <h1>Admin Dashboard</h1>
-            <p>Select an option to get started.</p>
+            <h1>Student Database Management</h1>
+            <p>Welcome, Darfirdous. Select an option to proceed.</p>
         </div>
 
         <div class="options-grid">
-            <div class="option-card" onclick="window.location.href='new_admission.html'">
-                <h3>New Admission</h3>
-                <p>Register a new student with a detailed form.</p>
-            </div>
+            <a href="new_admission.html" style="text-decoration: none;">
+                <div class="option-card">
+                    <h3>New Admission</h3>
+                    <p>Register a new student and fill out their details.</p>
+                </div>
+            </a>
+            
+            <a href="student_database.html" style="text-decoration: none;">
+                <div class="option-card">
+                    <h3>Students Database</h3>
+                    <p>View, search, and manage existing student records.</p>
+                </div>
+            </a>
 
-            <div class="option-card" onclick="window.location.href='students_database.html'">
-                <h3>Students Database</h3>
-                <p>View, search, and manage existing student records.</p>
-            </div>
-
-            <div class="option-card" onclick="alert('This feature requires a backend to handle file uploads and database import.');">
-                <h3>Import by Excel</h3>
-                <p>Import multiple student records from an Excel file.</p>
-            </div>
+            <a href="#" style="text-decoration: none;" onclick="alert('This feature is not yet available.');">
+                <div class="option-card">
+                    <h3>Import by Excel File</h3>
+                    <p>Import many students at once using an Excel file.</p>
+                </div>
+            </a>
         </div>
-        
+
         <div class="footer-buttons">
-            <button onclick="window.location.href='login.html'">Back</button>
+            <button class="btn-logout" onclick="window.location.href='login.html'">Logout</button>
         </div>
-
     </div>
 </body>
 </html>
