@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discharge Student - Jamia Arabia Madrasa</title>
+    <title>Dashboard - Jamia Arabia Madrasa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -14,134 +14,109 @@
             padding: 20px;
             color: #333;
         }
-        .main-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-            text-align: center;
-        }
         .header {
-            margin-bottom: 30px;
+            text-align: center;
+            margin-bottom: 40px;
         }
         .header h1 {
-            font-size: 28px;
+            font-size: 32px;
             color: #1e8449;
             margin: 0;
             font-weight: 700;
         }
         .header p {
-            font-size: 16px;
+            font-size: 18px;
             color: #555;
             margin-top: 8px;
         }
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 960px;
+            margin: auto;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border-top: 5px solid transparent;
         }
-        .form-group input {
-            width: calc(100% - 24px);
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-        .form-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
+        .card h2 {
+            font-size: 22px;
+            margin-top: 0;
+            font-weight: 700;
         }
-        .form-buttons button {
+        .card p {
+            font-size: 15px;
+            color: #777;
+        }
+        .card.card-green { border-top-color: #1e8449; }
+        .card.card-blue { border-top-color: #3498db; }
+        .card.card-red { border-top-color: #e74c3c; }
+        
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .btn-logout {
             padding: 12px 25px;
             border: none;
             border-radius: 6px;
+            background-color: #555;
+            color: white;
             font-size: 16px;
             cursor: pointer;
-            color: white;
-            font-weight: 700;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: background-color 0.3s;
         }
-        .form-buttons button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .btn-red { background-color: #f44336; }
-        .btn-red:hover { background-color: #e53935; }
-        .btn-back { background-color: #555; }
-        .btn-back:hover { background-color: #333; }
-        .result-message {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .success-message {
-            color: #4CAF50;
-        }
-        .error-message {
-            color: #f44336;
+        .btn-logout:hover {
+            background-color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1>Discharge Student</h1>
-            <p>Enter the Admission No. or Name of the student you want to discharge.</p>
-        </div>
+    <div class="header">
+        <h1>Welcome, Darfirdous</h1>
+        <p>Manage your student records efficiently.</p>
+    </div>
 
-        <div class="form-group">
-            <label for="dischargeInput">Admission No. or Name</label>
-            <input type="text" id="dischargeInput" placeholder="Enter Admission No. or Name">
-        </div>
-        
-        <div class="form-buttons">
-            <button class="btn-red" onclick="deleteStudent()">Delete Student</button>
-        </div>
-        
-        <div class="result-message" id="resultMessage"></div>
-
-        <div class="form-buttons" style="margin-top: 20px;">
-            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
-        </div>
+    <div class="grid-container">
+        <a href="new_admission.html" style="text-decoration: none; color: inherit;">
+            <div class="card card-green">
+                <h2>New Admission</h2>
+                <p>Register a new student with all their details.</p>
+            </div>
+        </a>
+        <a href="student_database.html" style="text-decoration: none; color: inherit;">
+            <div class="card card-blue">
+                <h2>Students Database</h2>
+                <p>View, search, and manage existing student records.</p>
+            </div>
+        </a>
+        <a href="discharge_student.html" style="text-decoration: none; color: inherit;">
+            <div class="card card-red">
+                <h2>Discharge Student</h2>
+                <p>Remove a student's record from the system.</p>
+            </div>
+        </a>
     </div>
     
+    <div class="footer">
+        <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+
     <script>
-        function deleteStudent() {
-            const input = document.getElementById('dischargeInput').value.trim();
-            const messageElement = document.getElementById('resultMessage');
-
-            if (input === '') {
-                messageElement.textContent = "Please enter a value to delete.";
-                messageElement.className = 'result-message error-message';
-                return;
-            }
-
-            // Get students from sessionStorage
-            let students = JSON.parse(sessionStorage.getItem('students')) || [];
-
-            const initialLength = students.length;
-            
-            // Filter out the student to be deleted
-            const updatedStudents = students.filter(student => 
-                student.admissionNo !== input && student.name.toLowerCase() !== input.toLowerCase()
-            );
-
-            if (updatedStudents.length < initialLength) {
-                // Save the updated list back to sessionStorage
-                sessionStorage.setItem('students', JSON.stringify(updatedStudents));
-                messageElement.textContent = "Student successfully deleted!";
-                messageElement.className = 'result-message success-message';
-            } else {
-                messageElement.textContent = "No student found with that Admission No. or Name.";
-                messageElement.className = 'result-message error-message';
-            }
+        function logout() {
+            // Redirect to the login page (index.html)
+            window.location.href = "index.html";
         }
     </script>
 </body>
