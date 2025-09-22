@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Jamia Arabia Madrasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .main-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 32px;
+            color: #1e8449;
+            margin: 0;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+        .option-card {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: 1px solid #eee;
+        }
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .option-card h3 {
+            font-size: 20px;
+            color: #1e8449;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .option-card p {
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-buttons {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .footer-buttons button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            background-color: #555;
+        }
+        .footer-buttons button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <p>Select an option to get started.</p>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-card" onclick="window.location.href='new_admission.html'">
+                <h3>New Admission</h3>
+                <p>Register a new student with a detailed form.</p>
+            </div>
+
+            <div class="option-card" onclick="window.location.href='students_database.html'">
+                <h3>Students Database</h3>
+                <p>View, search, and manage existing student records.</p>
+            </div>
+
+            <div class="option-card" onclick="alert('This feature requires a backend to handle file uploads and database import.');">
+                <h3>Import by Excel</h3>
+                <p>Import multiple student records from an Excel file.</p>
+            </div>
+        </div>
+        
+        <div class="footer-buttons">
+            <button onclick="window.location.href='login.html'">Back</button>
+        </div>
+
+    </div>
+</body>
+</html>

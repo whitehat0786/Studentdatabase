@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Database - Jamia Arabia Madrasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+            color: #333;
+        }
+        .main-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 32px;
+            color: #1e8449;
+            margin: 0;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
+        .search-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .search-section input {
+            width: 300px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .search-section button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            background-color: #008CBA;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .search-section button:hover {
+            background-color: #007B9E;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .option-card {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .option-card h3 {
+            font-size: 20px;
+            color: #1e8449;
+            margin-top: 0;
+        }
+        .option-card p {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+        .option-card .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+        .btn-green { background-color: #4CAF50; }
+        .btn-green:hover { background-color: #45a049; }
+        .btn-red { background-color: #f44336; }
+        .btn-red:hover { background-color: #e53935; }
+        .btn-blue { background-color: #2196F3; }
+        .btn-blue:hover { background-color: #1976D2; }
+        .action-button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        .footer-buttons button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+        }
+        .btn-logout { background-color: #555; }
+        .btn-logout:hover { background-color: #333; }
+        .btn-back { background-color: #008CBA; }
+        .btn-back:hover { background-color: #007B9E; }
+
+        /* New styles for results section */
+        #searchResults {
+            margin-top: 30px;
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
+        }
+        #searchResults h2 {
+            text-align: center;
+            color: #1e8449;
+        }
+        .student-result {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #fefefe;
+            text-align: left;
+        }
+        .student-result p {
+            margin: 5px 0;
+        }
+
+        /* Styles for the print-all table (hidden by default) */
+        #printAllTable {
+            display: none;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body > *:not(#printAllTable) {
+                display: none !important;
+            }
+            #printAllTable {
+                display: block;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: 'Roboto', sans-serif;
+            }
+            #printAllTable h1 {
+                text-align: center;
+                color: #1e8449;
+            }
+            #printAllTable table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            #printAllTable th, #printAllTable td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            #printAllTable th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Student Database Management</h1>
+            <p>Welcome to the student database. Search, view, and manage student records from here.</p>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Search by Name, Admission No, or Mobile No...">
+            <button onclick="searchStudent()">Search</button>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-card">
+                <h3>Print Student Record</h3>
+                <p>Print the record of a specific student along with their photo.</p>
+                <input type="text" placeholder="Enter Admission No..." id="printInput" style="width: 80%; padding: 8px; margin-bottom: 10px;">
+                <button class="btn btn-green" onclick="printStudent()">Print</button>
+            </div>
+
+            <div class="option-card">
+                <h3>Print All Students</h3>
+                <p>Generate and print a record of all students in an Excel-compatible file (A4 format).</p>
+                <button class="btn btn-blue" onclick="printAllStudents()">Print All</button>
+            </div>
+
+            <div class="option-card">
+                <h3>Discharge Any Student</h3>
+                <p>Remove a student from the database after filling out the necessary details.</p>
+                <button class="btn btn-red" onclick="dischargeStudent()">Discharge</button>
+            </div>
+
+            <div class="option-card">
+                <h3>View Student Forms</h3>
+                <p>Browse and view student forms one by one.</p>
+                <div class="action-button-group">
+                    <button class="btn btn-blue" onclick="viewPreviousStudent()">Previous</button>
+                    <button class="btn btn-blue" onclick="viewNextStudent()">Next</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="searchResults">
+            <h2>Search Results</h2>
+            <div id="resultsContainer">
+                <p style="text-align: center; color: #777;">Your search results will appear here.</p>
+            </div>
+        </div>
+        
+        <div class="footer-buttons">
+            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back</button>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+
+    </div>
+
+    <div id="printAllTable"></div>
+
+    <script>
+        // Sample student data (dummy database)
+        const students = [
+            { name: "Ahmed Khan", admissionNo: "1001", mobileNo: "9876543210", address: "Village ABC, Tehsil XYZ" },
+            { name: "Fatima Ali", admissionNo: "1002", mobileNo: "8765432109", address: "Village DEF, Tehsil GHI" },
+            { name: "Mohammad Raza", admissionNo: "1003", mobileNo: "7654321098", address: "Village JKL, Tehsil MNO" },
+            { name: "Zainab Bano", admissionNo: "1004", mobileNo: "6543210987", address: "Village PQR, Tehsil STU" },
+            { name: "Ali Abbas", admissionNo: "1005", mobileNo: "5432109876", address: "Village VWX, Tehsil YZA" }
+        ];
+
+        let currentStudentIndex = 0;
+
+        function displayStudent(student) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = `
+                <div class="student-result">
+                    <p><strong>Name:</strong> ${student.name}</p>
+                    <p><strong>Admission No:</strong> ${student.admissionNo}</p>
+                    <p><strong>Mobile No:</strong> ${student.mobileNo}</p>
+                    <p><strong>Address:</strong> ${student.address}</p>
+                </div>
+            `;
+        }
+
+        function searchStudent() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = students.filter(student =>
+                student.name.toLowerCase().includes(query) ||
+                student.admissionNo.toLowerCase().includes(query) ||
+                student.mobileNo.toLowerCase().includes(query)
+            );
+
+            const container = document.getElementById('resultsContainer');
+            if (results.length > 0) {
+                container.innerHTML = '';
+                results.forEach(student => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'student-result';
+                    resultDiv.innerHTML = `
+                        <p><strong>Name:</strong> ${student.name}</p>
+                        <p><strong>Admission No:</strong> ${student.admissionNo}</p>
+                        <p><strong>Mobile No:</strong> ${student.mobileNo}</p>
+                        <p><strong>Address:</strong> ${student.address}</p>
+                    `;
+                    container.appendChild(resultDiv);
+                });
+            } else {
+                container.innerHTML = '<p style="text-align: center; color: #777;">No students found matching your search.</p>';
+            }
+        }
+
+        function viewNextStudent() {
+            currentStudentIndex = (currentStudentIndex + 1) % students.length;
+            displayStudent(students[currentStudentIndex]);
+        }
+        
+        function viewPreviousStudent() {
+            currentStudentIndex = (currentStudentIndex - 1 + students.length) % students.length;
+            displayStudent(students[currentStudentIndex]);
+        }
+
+        // Function for printing a single student record (requires a backend)
+        function printStudent() {
+            const admissionNo = document.getElementById('printInput').value;
+            if (admissionNo.trim() === '') {
+                alert('Please enter an Admission No. to print a record.');
+                return;
+            }
+            alert(`To print a single student record, you need a backend to fetch data and generate a printable document for Admission No: ${admissionNo}.`);
+        }
+
+        // Function for printing all students
+        function printAllStudents() {
+            const printContainer = document.getElementById('printAllTable');
+            printContainer.innerHTML = '<h1>All Student Records</h1>';
+            
+            const table = document.createElement('table');
+            const headerRow = table.insertRow();
+            ['Name', 'Admission No', 'Mobile No', 'Address'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                headerRow.appendChild(th);
+            });
+            
+            students.forEach(student => {
+                const row = table.insertRow();
+                Object.values(student).forEach(value => {
+                    const cell = row.insertCell();
+                    cell.textContent = value;
+                });
+            });
+            
+            printContainer.appendChild(table);
+            window.print();
+        }
+
+        // Function to redirect to the discharge page
+        function dischargeStudent() {
+            window.location.href = 'discharge_student.html';
+        }
+
+        function logout() {
+            alert('Logging out...');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+</body>
+</html>

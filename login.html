@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Jamia Arabia Madrasa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+        .logo h1 {
+            font-size: 28px;
+            color: #1e8449;
+            margin: 10px 0 0;
+            font-weight: 700;
+        }
+        .welcome-text {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #1e8449;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            background-color: #1e8449;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-login:hover {
+            background-color: #1a6b3b;
+            transform: translateY(-2px);
+        }
+        .btn-exit {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-exit:hover {
+            background-color: #e0e0e0;
+        }
+        .error-message {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="https://example.com/madrasa-logo.png" alt="Madrasa Logo" style="display:none;">
+            <h1>Jamia Arabia Madrasa</h1>
+        </div>
+        <p class="welcome-text">Student Database Management System</p>
+        
+        <div class="error-message" id="errorMessage">Invalid Username or Password.</div>
+        
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username">
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password">
+        </div>
+        <button class="btn-login" onclick="login()">Login</button>
+        <a href="#" class="btn-exit" onclick="alert('Exiting the application...');">Exit</a>
+    </div>
+
+    <script>
+        function login() {
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Hardcoded credentials for demonstration
+            const correctUsername = "darfirdous";
+            const correctPassword = "Darfirdous@123";
+
+            if (usernameInput === correctUsername && passwordInput === correctPassword) {
+                // Successful login, redirect to the dashboard
+                window.location.href = "dashboard.html";
+            } else {
+                // Show error message for invalid credentials
+                errorMessage.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
