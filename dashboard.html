@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Jamia Arabia Madrasa</title>
+    <title>Discharge Student - Jamia Arabia Madrasa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -19,60 +19,47 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
+            max-width: 600px;
             margin: auto;
+            text-align: center;
         }
         .header {
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .header h1 {
-            font-size: 32px;
+            font-size: 28px;
             color: #1e8449;
             margin: 0;
             font-weight: 700;
         }
         .header p {
-            font-size: 18px;
+            font-size: 16px;
             color: #555;
-            margin-top: 10px;
+            margin-top: 8px;
         }
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            text-align: center;
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
         }
-        .option-card {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            border: 1px solid #eee;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
-        .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        .form-group input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
         }
-        .option-card h3 {
-            font-size: 20px;
-            color: #1e8449;
-            margin: 0;
-        }
-        .option-card p {
-            font-size: 14px;
-            color: #777;
-            margin-top: 10px;
-        }
-        .footer-buttons {
+        .form-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 40px;
+            margin-top: 30px;
         }
-        .footer-buttons button {
+        .form-buttons button {
             padding: 12px 25px;
             border: none;
             border-radius: 6px;
@@ -80,48 +67,82 @@
             cursor: pointer;
             color: white;
             font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-logout {
-            background-color: #555;
+        .form-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .btn-logout:hover {
-            background-color: #333;
+        .btn-red { background-color: #f44336; }
+        .btn-red:hover { background-color: #e53935; }
+        .btn-back { background-color: #555; }
+        .btn-back:hover { background-color: #333; }
+        .result-message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .success-message {
+            color: #4CAF50;
+        }
+        .error-message {
+            color: #f44336;
         }
     </style>
 </head>
 <body>
     <div class="main-container">
         <div class="header">
-            <h1>Student Database Management</h1>
-            <p>Welcome, Darfirdous. Select an option to proceed.</p>
+            <h1>Discharge Student</h1>
+            <p>Enter the Admission No. or Name of the student you want to discharge.</p>
         </div>
 
-        <div class="options-grid">
-            <a href="new_admission.html" style="text-decoration: none;">
-                <div class="option-card">
-                    <h3>New Admission</h3>
-                    <p>Register a new student and fill out their details.</p>
-                </div>
-            </a>
-            
-            <a href="student_database.html" style="text-decoration: none;">
-                <div class="option-card">
-                    <h3>Students Database</h3>
-                    <p>View, search, and manage existing student records.</p>
-                </div>
-            </a>
-
-            <a href="#" style="text-decoration: none;" onclick="alert('This feature is not yet available.');">
-                <div class="option-card">
-                    <h3>Import by Excel File</h3>
-                    <p>Import many students at once using an Excel file.</p>
-                </div>
-            </a>
+        <div class="form-group">
+            <label for="dischargeInput">Admission No. or Name</label>
+            <input type="text" id="dischargeInput" placeholder="Enter Admission No. or Name">
         </div>
+        
+        <div class="form-buttons">
+            <button class="btn-red" onclick="deleteStudent()">Delete Student</button>
+        </div>
+        
+        <div class="result-message" id="resultMessage"></div>
 
-        <div class="footer-buttons">
-            <button class="btn-logout" onclick="window.location.href='login.html'">Logout</button>
+        <div class="form-buttons" style="margin-top: 20px;">
+            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
         </div>
     </div>
+    
+    <script>
+        function deleteStudent() {
+            const input = document.getElementById('dischargeInput').value.trim();
+            const messageElement = document.getElementById('resultMessage');
+
+            if (input === '') {
+                messageElement.textContent = "Please enter a value to delete.";
+                messageElement.className = 'result-message error-message';
+                return;
+            }
+
+            // Get students from sessionStorage
+            let students = JSON.parse(sessionStorage.getItem('students')) || [];
+
+            const initialLength = students.length;
+            
+            // Filter out the student to be deleted
+            const updatedStudents = students.filter(student => 
+                student.admissionNo !== input && student.name.toLowerCase() !== input.toLowerCase()
+            );
+
+            if (updatedStudents.length < initialLength) {
+                // Save the updated list back to sessionStorage
+                sessionStorage.setItem('students', JSON.stringify(updatedStudents));
+                messageElement.textContent = "Student successfully deleted!";
+                messageElement.className = 'result-message success-message';
+            } else {
+                messageElement.textContent = "No student found with that Admission No. or Name.";
+                messageElement.className = 'result-message error-message';
+            }
+        }
+    </script>
 </body>
 </html>
