@@ -11,94 +11,57 @@
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f7f6;
-            padding: 40px;
+            padding: 20px;
+            color: #333;
         }
         .main-container {
             background-color: white;
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
+            max-width: 700px;
             margin: auto;
         }
-        .form-header {
+        .header {
             text-align: center;
             margin-bottom: 30px;
         }
-        .form-header h1 {
+        .header h1 {
             font-size: 28px;
             color: #1e8449;
             margin: 0;
             font-weight: 700;
         }
-        .form-header p {
+        .header p {
             font-size: 16px;
             color: #555;
             margin-top: 8px;
         }
-        .content-layout {
-            display: flex;
-            flex-direction: row-reverse;
-            gap: 40px;
-        }
-        .photo-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        .photo-box {
-            width: 150px;
-            height: 180px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-        }
-        .photo-box-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #aaa;
-            font-size: 14px;
-            text-align: center;
-            pointer-events: none;
-        }
         .form-grid {
-            flex-grow: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
         .form-group {
-            display: flex;
-            flex-direction: column;
+            text-align: left;
         }
         .form-group label {
+            display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #333;
         }
-        .form-group input {
+        .form-group input, .form-group select {
+            width: calc(100% - 24px);
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
         }
-        .form-group input:focus {
-            outline: none;
-            border-color: #1e8449;
-            box-shadow: 0 0 5px rgba(30, 132, 73, 0.5);
-        }
         .form-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 40px;
+            margin-top: 30px;
         }
         .form-buttons button {
             padding: 12px 25px;
@@ -114,340 +77,122 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .btn-green { background-color: #1e8449; }
+        .btn-green:hover { background-color: #1a6b3b; }
         .btn-back { background-color: #555; }
-        .btn-reset { background-color: #f44336; }
-        .btn-preview { background-color: #008CBA; }
-        .btn-submit { background-color: #4CAF50; }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+        .btn-back:hover { background-color: #333; }
+        
+        .result-message {
+            margin-top: 20px;
+            text-align: center;
             font-weight: bold;
         }
-        .close-btn:hover,
-        .close-btn:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+        .success-message {
+            color: #4CAF50;
         }
-        .preview-content {
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        .preview-content h2 {
-            text-align: center;
-            color: #1e8449;
-        }
-        .preview-photo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .preview-photo {
-            width: 150px;
-            height: 180px;
-            border: 1px solid #ddd;
-            background-size: cover;
-            background-position: center;
-            border-radius: 5px;
-        }
-        .preview-data p {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .preview-data strong {
-            color: #333;
-        }
-        .modal-footer {
-            margin-top: 25px;
-            text-align: center;
-        }
-        .modal-footer .form-buttons button {
-            margin: 0 5px;
-        }
-        .correct-checkbox {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .correct-checkbox label {
-            font-weight: 500;
-        }
-        /* Buttons that are initially hidden */
-        .modal-btn-disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
+        .error-message {
+            color: #f44336;
         }
 
-        /* Print-specific styles to hide everything except the modal content */
-        @media print {
-            body > *:not(.modal) {
-                display: none;
-            }
-            .modal {
-                display: block !important;
-                position: absolute;
-                left: 0;
-                top: 0;
-                padding-top: 0;
-                background: none;
-                z-index: 9999;
-            }
-            .modal-content {
-                width: 100%;
-                margin: 0;
-                box-shadow: none;
-                border: none;
-                background-color: white;
-            }
-            .modal-footer {
-                display: none;
+        @media (min-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <div class="form-header">
-            <h1>New Addmission</h1>
-            <p>Fill out the form below to register a new student.</p>
+        <div class="header">
+            <h1>New Admission</h1>
+            <p>Fill out the form to register a new student.</p>
         </div>
 
-        <div class="content-layout">
-            <div class="photo-section">
-                <div class="photo-box" id="photo-preview">
-                    <span class="photo-box-text">Passport Size Photo</span>
-                </div>
-                <div class="form-group" style="width: 150px;">
-                    <label>Photograph</label>
-                    <input type="file" id="photo-upload" name="photograph" accept="image/*">
-                </div>
-            </div>
-            
-            <form id="admissionForm" class="form-grid">
+        <form id="admissionForm">
+            <div class="form-grid">
                 <div class="form-group">
-                    <label for="admission_no">addmission no</label>
-                    <input type="text" id="admission_no" name="admission_no">
+                    <label for="admissionNo">Admission No.</label>
+                    <input type="text" id="admissionNo" required>
                 </div>
                 <div class="form-group">
-                    <label for="form_no">Form no</label>
-                    <input type="text" id="form_no" name="form_no">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="admission_date">Date of Addmission</label>
-                    <input type="date" id="admission_date" name="admission_date">
-                </div>
-                <div class="form-group">
-                    <label for="student_name">Student Name</label>
-                    <input type="text" id="student_name" name="student_name">
-                </div>
-                <div class="form-group">
-                    <label for="parentage">Parantage</label>
-                    <input type="text" id="parentage" name="parentage">
+                    <label for="fname">Father's Name</label>
+                    <input type="text" id="fname" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" name="address">
+                    <input type="text" id="address" required>
                 </div>
                 <div class="form-group">
-                    <label for="tehsil">Tehsil</label>
-                    <input type="text" id="tehsil" name="tehsil">
+                    <label for="doa">Date of Admission</label>
+                    <input type="date" id="doa" required>
                 </div>
                 <div class="form-group">
-                    <label for="police_station">police station</label>
-                    <input type="text" id="police_station" name="police_station">
+                    <label for="mobileNo">Mobile No.</label>
+                    <input type="text" id="mobileNo" required>
                 </div>
                 <div class="form-group">
-                    <label for="pincode">Area pincode</label>
-                    <input type="text" id="pincode" name="pincode">
-                </div>
-                <div class="form-group">
-                    <label for="district">district</label>
-                    <input type="text" id="district" name="district">
-                </div>
-                <div class="form-group">
-                    <label for="phone_number">Phone number</label>
-                    <input type="tel" id="phone_number" name="phone_number">
-                </div>
-                <div class="form-group">
-                    <label for="phone_number_home">Phone number home</label>
-                    <input type="tel" id="phone_number_home" name="phone_number_home">
-                </div>
-            </form>
-        </div>
-
-        <div class="form-buttons">
-            <button type="button" class="btn-back" onclick="window.location.href='dashboard.html'">Back</button>
-            <button type="reset" class="btn-reset">reset</button>
-            <button type="button" class="btn-preview" id="previewBtn">Preview</button>
-            <button type="button" class="btn-submit" id="submitBtn">Submit</button>
-        </div>
-    </div>
-
-    <div id="previewModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Preview Student Data</h2>
-            <div class="preview-content">
-                <div class="preview-photo-container">
-                    <div class="preview-photo" id="modal-photo-preview"></div>
-                </div>
-                <div class="preview-data">
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <div class="correct-checkbox">
-                    <input type="checkbox" id="correct-details-checkbox">
-                    <label for="correct-details-checkbox">All details are correct</label>
-                </div>
-                <div class="form-buttons">
-                    <button class="btn-print modal-btn-disabled" id="printBtn">Print</button>
-                    <button class="btn-submit modal-btn-disabled" id="nextBtn">Next</button>
+                    <label for="class">Class</label>
+                    <select id="class" required>
+                        <option value="">Select Class</option>
+                        <option value="Hifz">Hifz</option>
+                        <option value="Nazra">Nazra</option>
+                        <option value="Qiraat">Qiraat</option>
+                        <option value="Urdu">Urdu</option>
+                    </select>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <script>
-        // Function to handle photo preview in main form
-        document.getElementById('photo-upload').addEventListener('change', function(event) {
-            const photoPreview = document.getElementById('photo-preview');
-            const file = event.target.files[0];
             
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    photoPreview.style.backgroundImage = `url(${e.target.result})`;
-                    photoPreview.querySelector('.photo-box-text').style.display = 'none';
-                }
-                reader.readAsDataURL(file);
-            } else {
-                photoPreview.style.backgroundImage = 'none';
-                photoPreview.querySelector('.photo-box-text').style.display = 'block';
-            }
-        });
-
-        // Function to handle the Preview button
-        document.getElementById('previewBtn').addEventListener('click', function() {
-            const form = document.getElementById('admissionForm');
-            const previewModal = document.getElementById('previewModal');
-            const previewContent = previewModal.querySelector('.preview-data');
-            const modalPhoto = document.getElementById('modal-photo-preview');
-            const uploadedPhoto = document.getElementById('photo-preview').style.backgroundImage;
-
-            // Reset modal state
-            document.getElementById('correct-details-checkbox').checked = false;
-            document.getElementById('printBtn').classList.add('modal-btn-disabled');
-            document.getElementById('nextBtn').classList.add('modal-btn-disabled');
-
-            // Clear previous data
-            previewContent.innerHTML = '';
-            
-            // Set photo in modal
-            modalPhoto.style.backgroundImage = uploadedPhoto;
-
-            // Get form data and display it
-            const fields = form.querySelectorAll('input');
-            fields.forEach(field => {
-                let value = field.value;
-                let label = field.previousElementSibling ? field.previousElementSibling.textContent : field.name;
-                
-                // Exclude the file input from being displayed as text
-                if (field.type !== 'file' && value) {
-                    const p = document.createElement('p');
-                    p.innerHTML = `<strong>${label}:</strong> ${value}`;
-                    previewContent.appendChild(p);
-                }
-            });
-
-            // Display the modal
-            previewModal.style.display = 'block';
-        });
-
-        // Function to enable/disable buttons based on checkbox
-        document.getElementById('correct-details-checkbox').addEventListener('change', function() {
-            const isChecked = this.checked;
-            const printBtn = document.getElementById('printBtn');
-            const nextBtn = document.getElementById('nextBtn');
-
-            if (isChecked) {
-                printBtn.classList.remove('modal-btn-disabled');
-                nextBtn.classList.remove('modal-btn-disabled');
-            } else {
-                printBtn.classList.add('modal-btn-disabled');
-                nextBtn.classList.add('modal-btn-disabled');
-            }
-        });
+            <div class="form-buttons">
+                <button type="submit" class="btn-green">Add Student</button>
+            </div>
+        </form>
         
-        // Function to handle Print button click
-        document.getElementById('printBtn').addEventListener('click', function() {
-            window.print();
-        });
+        <div class="result-message" id="resultMessage"></div>
 
-        // Function to handle Next button click (closes modal, but doesn't clear the form)
-        document.getElementById('nextBtn').addEventListener('click', function() {
-            document.getElementById('previewModal').style.display = 'none';
-            // Form data remains in place, allowing the user to click Submit on the main page.
-        });
+        <div class="form-buttons" style="margin-top: 20px;">
+            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('admissionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const student = {
+                admissionNo: document.getElementById('admissionNo').value,
+                name: document.getElementById('name').value,
+                fname: document.getElementById('fname').value,
+                address: document.getElementById('address').value,
+                doa: document.getElementById('doa').value,
+                mobileNo: document.getElementById('mobileNo').value,
+                class: document.getElementById('class').value
+            };
+            
+            // Get existing students from sessionStorage, or initialize an empty array
+            let students = JSON.parse(sessionStorage.getItem('students')) || [];
+            
+            // Check for duplicate admission number
+            const isDuplicate = students.some(s => s.admissionNo === student.admissionNo);
+            const messageElement = document.getElementById('resultMessage');
 
-        // **NEW** Function for the Submit button
-        document.getElementById('submitBtn').addEventListener('click', function(event) {
-            // This is a basic validation check. You can add more detailed validation here if needed.
-            const studentName = document.getElementById('student_name').value;
-            const admissionNo = document.getElementById('admission_no').value;
-
-            if (studentName === '' || admissionNo === '') {
-                alert('Please fill out all required fields.');
+            if (isDuplicate) {
+                messageElement.textContent = "Error: Admission No. already exists!";
+                messageElement.className = 'result-message error-message';
             } else {
-                alert('Form submitted successfully!');
-                // Reset the form after successful submission
+                students.push(student);
+                sessionStorage.setItem('students', JSON.stringify(students));
+                
+                messageElement.textContent = "Student added successfully!";
+                messageElement.className = 'result-message success-message';
+                
+                // Clear the form
                 document.getElementById('admissionForm').reset();
-                document.getElementById('photo-upload').value = '';
-                document.getElementById('photo-preview').style.backgroundImage = 'none';
-                document.getElementById('photo-preview').querySelector('.photo-box-text').style.display = 'block';
             }
         });
-
-
-        // Close the modal when the user clicks on 'x'
-        document.querySelector('.close-btn').addEventListener('click', function() {
-            document.getElementById('previewModal').style.display = 'none';
-        });
-
-        // Close the modal when the user clicks anywhere outside of it
-        window.onclick = function(event) {
-            const previewModal = document.getElementById('previewModal');
-            if (event.target == previewModal) {
-                previewModal.style.display = 'none';
-            }
-        }
     </script>
 </body>
 </html>
