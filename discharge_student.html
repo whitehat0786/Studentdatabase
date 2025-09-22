@@ -21,9 +21,9 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
+            text-align: center;
         }
         .header {
-            text-align: center;
             margin-bottom: 30px;
         }
         .header h1 {
@@ -38,25 +38,20 @@
             margin-top: 8px;
         }
         .form-group {
-            display: flex;
-            flex-direction: column;
             margin-bottom: 20px;
+            text-align: left;
         }
         .form-group label {
+            display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #333;
         }
-        .form-group input, .form-group textarea {
+        .form-group input {
+            width: calc(100% - 24px);
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #1e8449;
-            box-shadow: 0 0 5px rgba(30, 132, 73, 0.5);
         }
         .form-buttons {
             display: flex;
@@ -78,30 +73,19 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .btn-red { background-color: #f44336; }
+        .btn-red:hover { background-color: #e53935; }
         .btn-back { background-color: #555; }
-        .btn-discharge { background-color: #f44336; }
-        .btn-print { background-color: #2196F3; }
-
-        /* Styles for the result section */
-        #dischargeResult {
-            margin-top: 40px;
-            border-top: 2px solid #ddd;
-            padding-top: 20px;
-            display: none; /* Hide by default */
+        .btn-back:hover { background-color: #333; }
+        .result-message {
+            margin-top: 20px;
+            font-weight: bold;
         }
-        #dischargeResult h2 {
-            text-align: center;
-            color: #1e8449;
+        .success-message {
+            color: #4CAF50;
         }
-        .result-info {
-            background-color: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .result-info strong {
-            color: #1e8449;
+        .error-message {
+            color: #f44336;
         }
     </style>
 </head>
@@ -109,68 +93,54 @@
     <div class="main-container">
         <div class="header">
             <h1>Discharge Student</h1>
-            <p>Fill in the details to discharge a student from the register.</p>
+            <p>Enter the Admission No. or Name of the student you want to discharge.</p>
         </div>
 
-        <div id="dischargeForm">
-            <div class="form-group">
-                <label for="admissionNo">Admission No.</label>
-                <input type="text" id="admissionNo" placeholder="Enter student's admission number" required>
-            </div>
-            <div class="form-group">
-                <label for="dischargeDate">Date of Discharge</label>
-                <input type="date" id="dischargeDate" required>
-            </div>
-            <div class="form-group">
-                <label for="dischargeReason">Reason for Discharge</label>
-                <textarea id="dischargeReason" rows="4" placeholder="Enter reason for discharge" required></textarea>
-            </div>
-            <div class="form-buttons">
-                <button type="button" class="btn-back" onclick="window.location.href='students_database.html'">Back</button>
-                <button type="button" class="btn-discharge" onclick="processDischarge()">Discharge</button>
-            </div>
+        <div class="form-group">
+            <label for="dischargeInput">Admission No. or Name</label>
+            <input type="text" id="dischargeInput" placeholder="Enter Admission No. or Name">
         </div>
+        
+        <div class="form-buttons">
+            <button class="btn-red" onclick="deleteStudent()">Delete Student</button>
+        </div>
+        
+        <div class="result-message" id="resultMessage"></div>
 
-        <div id="dischargeResult">
-            <h2>Discharge Confirmation</h2>
-            <div class="result-info">
-                <p>The student's record has been marked as **Discharged**.</p>
-                <p><strong>Admission No:</strong> <span id="resultAdmissionNo"></span></p>
-                <p><strong>Date of Discharge:</strong> <span id="resultDischargeDate"></span></p>
-                <p><strong>Reason:</strong> <span id="resultDischargeReason"></span></p>
-            </div>
-            <div class="form-buttons">
-                <button type="button" class="btn-print" onclick="window.print()">Print This Record</button>
-            </div>
+        <div class="form-buttons" style="margin-top: 20px;">
+            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
         </div>
     </div>
-
+    
     <script>
-        function processDischarge() {
-            const admissionNo = document.getElementById('admissionNo').value;
-            const dischargeDate = document.getElementById('dischargeDate').value;
-            const dischargeReason = document.getElementById('dischargeReason').value;
+        function deleteStudent() {
+            const input = document.getElementById('dischargeInput').value.trim();
+            const messageElement = document.getElementById('resultMessage');
 
-            if (!admissionNo || !dischargeDate || !dischargeReason) {
-                alert('Please fill out all fields to proceed with the discharge.');
+            if (input === '') {
+                messageElement.textContent = "Please enter a value to delete.";
+                messageElement.className = 'result-message error-message';
                 return;
             }
 
-            // Simulate the discharge process
-            const confirmed = confirm(`Are you sure you want to discharge student with Admission No. ${admissionNo}?`);
-            if (confirmed) {
-                // Display the results
-                document.getElementById('resultAdmissionNo').textContent = admissionNo;
-                document.getElementById('resultDischargeDate').textContent = dischargeDate;
-                document.getElementById('resultDischargeReason').textContent = dischargeReason;
-                
-                // Hide the form and show the result
-                document.getElementById('dischargeForm').style.display = 'none';
-                document.getElementById('dischargeResult').style.display = 'block';
+            // Get students from sessionStorage
+            let students = JSON.parse(sessionStorage.getItem('students')) || [];
 
-                // In a real application, you would send this data to a server here.
-                // For example:
-                // fetch('/api/discharge-student', { method: 'POST', body: JSON.stringify({ admissionNo, dischargeDate, dischargeReason }) });
+            const initialLength = students.length;
+            
+            // Filter out the student to be deleted
+            const updatedStudents = students.filter(student => 
+                student.admissionNo !== input && student.name.toLowerCase() !== input.toLowerCase()
+            );
+
+            if (updatedStudents.length < initialLength) {
+                // Save the updated list back to sessionStorage
+                sessionStorage.setItem('students', JSON.stringify(updatedStudents));
+                messageElement.textContent = "Student successfully deleted!";
+                messageElement.className = 'result-message success-message';
+            } else {
+                messageElement.textContent = "No student found with that Admission No. or Name.";
+                messageElement.className = 'result-message error-message';
             }
         }
     </script>
