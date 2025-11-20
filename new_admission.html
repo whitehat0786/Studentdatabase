@@ -3,195 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Admission - Jamia Arabia Madrasa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Galactic Enlistment Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7f6;
-            padding: 20px;
-            color: #333;
-        }
-        .main-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
-            margin: auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 28px;
-            color: #1e8449;
-            margin: 0;
-            font-weight: 700;
-        }
-        .header p {
-            font-size: 16px;
-            color: #555;
-            margin-top: 8px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        .form-group {
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        .form-group input, .form-group select {
-            width: calc(100% - 24px);
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        .form-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        .form-buttons button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            color: white;
-            font-weight: 700;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .form-buttons button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .btn-green { background-color: #1e8449; }
-        .btn-green:hover { background-color: #1a6b3b; }
-        .btn-back { background-color: #555; }
-        .btn-back:hover { background-color: #333; }
-        
-        .result-message {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .success-message {
-            color: #4CAF50;
-        }
-        .error-message {
-            color: #f44336;
+        /* --- Sci-Fi Core Variables --- */
+        :root {
+            --neon-blue: #00ffff; /* Primary Accent */
+            --dark-bg: #0a1828;  /* Deep Space Background */
+            --mid-gray: #34495e; /* Panel Color */
+            --light-text: #e0f7fa; /* Screen Text Color */
+            --glow-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+            --border-thick: 2px solid var(--neon-blue);
         }
 
-        @media (min-width: 600px) {
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+        /* --- 1. Global & Typography --- */
+        body {
+            font-family: 'Share Tech Mono', monospace; /* Monospace for terminal feel */
+            background-color: var(--dark-bg);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--light-text);
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                repeating-linear-gradient(0deg, #00ffff1a, #0a1828 2px); /* Scanline effect */
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: rgba(10, 24, 40, 0.85); /* Semi-transparent panel */
+            padding: 40px;
+            border-radius: 0; /* Sharp corners */
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Soft main glow */
+            border: 1px solid var(--neon-blue);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--neon-blue);
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-size: 2.2em;
+            letter-spacing: 5px;
+            text-shadow: var(--glow-shadow);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+            padding-bottom: 15px;
+        }
+
+        /* --- 2. Form Structure and Inputs --- */
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 400;
+            font-size: 0.9em;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--mid-gray);
+            border-radius: 0; /* Sharp corners */
+            box-sizing: border-box;
+            background-color: #0d2238; /* Slightly lighter inner background */
+            color: var(--light-text);
+            font-size: 1em;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 5px var(--neon-blue); /* Neon glow on focus */
+            outline: none;
+            background-color: #1a3350;
+        }
+        
+        /* Fieldset as Data Blocks */
+        fieldset {
+            border: none;
+            border-top: 1px dashed var(--mid-gray);
+            padding: 25px 0;
+            margin-bottom: 35px;
+            border-radius: 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding-left: 20px;
+        }
+        
+        legend {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--neon-blue);
+            padding: 0 10px;
+            text-transform: uppercase;
+        }
+
+        /* --- 3. Photo Upload Styling (Aperture/Scanner Look) --- */
+        .photo-upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid var(--neon-blue); /* Solid border for definition */
+            border-radius: 5px;
+            background-color: #05101a; 
+            width: 200px; 
+            float: right; 
+            margin-left: 35px;
+            box-shadow: var(--glow-shadow);
+        }
+
+        .photo-preview {
+            width: 140px;
+            height: 160px; 
+            border: 1px solid var(--mid-gray);
+            border-radius: 3px;
+            background-color: #000; /* Black scan area */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.4);
+        }
+
+        .photo-preview span {
+            color: rgba(0, 255, 255, 0.7);
+            font-weight: 400;
+            font-size: 0.8em;
+            text-align: center;
+            line-height: 1.2;
+            padding: 5px;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+        
+        .photo-details p {
+            font-size: 0.75em;
+            color: var(--neon-blue);
+            margin: 0 0 10px 0;
+        }
+
+        input[type="file"] {
+            border: 1px solid var(--neon-blue);
+            background-color: #1a3350;
+            padding: 5px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        
+        /* Utility to clear float */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* --- 4. Command Buttons --- */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid var(--neon-blue);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: 1px solid var(--neon-blue);
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            text-align: center;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: var(--glow-shadow);
+        }
+
+        .btn-submit {
+            background-color: #006400; /* Darker green for activation */
+            color: #00ff00; /* Neon green text */
+            border-color: #00ff00;
+        }
+
+        .btn-submit:hover {
+            background-color: #008000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+
+        .btn-back {
+            background-color: transparent;
+            color: var(--neon-blue);
+        }
+
+        .btn-back:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
         }
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="header">
-            <h1>New Admission</h1>
-            <p>Fill out the form to register a new student.</p>
-        </div>
 
+    <div class="container">
+        <h2>// GALACTIC ENLISTMENT TERMINAL //</h2>
+        
         <form id="admissionForm">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="admissionNo">Admission No.</label>
-                    <input type="text" id="admissionNo" required>
+            
+            <div class="photo-upload-container">
+                <div class="photo-preview" id="photoPreview">
+                    <span>BIOMETRIC IMAGE SLOT</span>
                 </div>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="fname">Father's Name</label>
-                    <input type="text" id="fname" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" required>
-                </div>
-                <div class="form-group">
-                    <label for="doa">Date of Admission</label>
-                    <input type="date" id="doa" required>
-                </div>
-                <div class="form-group">
-                    <label for="mobileNo">Mobile No.</label>
-                    <input type="text" id="mobileNo" required>
-                </div>
-                <div class="form-group">
-                    <label for="class">Class</label>
-                    <select id="class" required>
-                        <option value="">Select Class</option>
-                        <option value="Hifz">Hifz</option>
-                        <option value="Nazra">Nazra</option>
-                        <option value="Qiraat">Qiraat</option>
-                        <option value="Urdu">Urdu</option>
-                    </select>
+                <div class="photo-details">
+                    <label for="photo">Secure Biometric Data</label>
+                    <p>File type: .DAT or .IMG (MAX 5MB)</p>
+                    <input type="file" id="photo" name="photo" accept="image/*" required>
                 </div>
             </div>
-            
-            <div class="form-buttons">
-                <button type="submit" class="btn-green">Add Student</button>
+
+            <div class="clearfix"></div> 
+
+            <fieldset>
+                <legend>A. PERSONNEL DATA LOG</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="admission_no">DESIGNATION CODE (Ref.)</label>
+                        <input type="text" id="admission_no" name="admission_no" placeholder="ALPHA-789-01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admission_date">ENLISTMENT CYCLE START</label>
+                        <input type="date" id="admission_date" name="admission_date" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">UNIT CALLSIGN (Student Name)</label>
+                        <input type="text" id="name" name="name" placeholder="FULL GALAXY NAME" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentage">ORIGIN ALPHA-LINK (Parentage)</label>
+                        <input type="text" id="parentage" name="parentage" placeholder="PRIMARY ANCESTOR" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mobile">COMMS RELAY (Mobile)</label>
+                        <input type="text" id="mobile" name="mobile" placeholder="RELAY ID (10 digits)" pattern="\d{10}" title="Ten digits mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">SECURE EMAIL UPLINK</label>
+                        <input type="email" id="email" name="email" placeholder="USER@TERMINAL.COM">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>B. SPATIAL ORIGIN DATA</legend>
+                
+                <div class="form-group">
+                    <label for="address">RESIDENCE SECTOR COORDINATES</label>
+                    <textarea id="address" name="address" rows="3" placeholder="HABITAT UNIT & SUB-SECTOR LOCATION" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tehsil">SUB-SECTOR NODE (Tehsil)</label>
+                        <input type="text" id="tehsil" name="tehsil" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="police_station">LOCAL SECURITY GRID (Police Station)</label>
+                        <input type="text" id="police_station" name="police_station" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="district">PRIMARY ORBITAL BASE (District)</label>
+                        <input type="text" id="district" name="district" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">TRANSIT NODE KEY (Pincode)</label>
+                        <input type="text" id="pincode" name="pincode" placeholder="6-DIGIT NODE KEY" pattern="\d{6}" title="Six digits Pincode" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="button-group">
+                <a href="#" class="btn btn-back">INITIATE RETURN TO COMMAND</a> 
+                
+                <button type="submit" class="btn btn-submit">SECURE DATA TRANSMISSION</button>
             </div>
         </form>
-        
-        <div class="result-message" id="resultMessage"></div>
-
-        <div class="form-buttons" style="margin-top: 20px;">
-            <button class="btn-back" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
-        </div>
     </div>
-    
-    <script>
-        document.getElementById('admissionForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const student = {
-                admissionNo: document.getElementById('admissionNo').value,
-                name: document.getElementById('name').value,
-                fname: document.getElementById('fname').value,
-                address: document.getElementById('address').value,
-                doa: document.getElementById('doa').value,
-                mobileNo: document.getElementById('mobileNo').value,
-                class: document.getElementById('class').value
-            };
-            
-            // Get existing students from sessionStorage, or initialize an empty array
-            let students = JSON.parse(sessionStorage.getItem('students')) || [];
-            
-            // Check for duplicate admission number
-            const isDuplicate = students.some(s => s.admissionNo === student.admissionNo);
-            const messageElement = document.getElementById('resultMessage');
 
-            if (isDuplicate) {
-                messageElement.textContent = "Error: Admission No. already exists!";
-                messageElement.className = 'result-message error-message';
+    <script>
+        // --- JavaScript for Biometric Image Scan ---
+        const photoInput = document.getElementById('photo');
+        const photoPreview = document.getElementById('photoPreview');
+
+        photoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Apply a subtle sci-fi filter to the image preview
+                    photoPreview.innerHTML = `<img src="${e.target.result}" alt="Biometric Scan" style="width:100%; height:100%; object-fit:cover; filter: contrast(150%) hue-rotate(180deg); opacity: 0.8;">`;
+                };
+                reader.readAsDataURL(file);
             } else {
-                students.push(student);
-                sessionStorage.setItem('students', JSON.stringify(students));
-                
-                messageElement.textContent = "Student added successfully!";
-                messageElement.className = 'result-message success-message';
-                
-                // Clear the form
-                document.getElementById('admissionForm').reset();
+                photoPreview.innerHTML = `<span>BIOMETRIC IMAGE SLOT</span>`;
             }
+        });
+        
+        // --- JavaScript for Form Submission ---
+        document.getElementById('admissionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            // In a real application, you would send the data here.
+            alert('// DATA PACKET SECURED. AWAITING VALIDATION RESPONSE //');
         });
     </script>
 </body>
